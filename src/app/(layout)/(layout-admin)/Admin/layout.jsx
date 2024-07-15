@@ -15,7 +15,7 @@ export default function RootLayout({ children }) {
 
     useEffect(() => {
         user === null && router.replace('/')
-        userDB && userDB !== undefined && userDB.rol !== 'Cliente' && router.replace('/')
+        userDB && userDB !== undefined && userDB.rol === 'Cliente' && router.replace('/')
     }, [user, userDB])
 
     return (
