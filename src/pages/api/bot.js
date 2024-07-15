@@ -2,7 +2,7 @@ const TelegramBot = require('node-telegram-bot-api');
 
 export default async function account(req, res) {
 
-    const token = '7031417747:AAGr4T2ndCANwHiRTrV9RV0S8FjiQJNDeAQ';
+    const token = '6674000394:AAE5B5t7BpDI-RLD4C5zdbYyRqmG7h_1Uac';
     const bot = new TelegramBot(token, { polling: true });
 
     function sendMSG() {

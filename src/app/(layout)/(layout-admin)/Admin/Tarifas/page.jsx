@@ -175,6 +175,7 @@ export default function Home() {
         headers,
         method: 'POST',
         body: JSON.stringify(data),
+
       }
     );
 
