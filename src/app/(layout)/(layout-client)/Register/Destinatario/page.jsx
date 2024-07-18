@@ -64,7 +64,7 @@ function Home() {
         }
         writeUserData(`users/${user.uid}/destinatarios/${uuid}`, { ...destinatario, uuid }, setUserSuccess, callback)
     }
-    console.log(destinatario)
+    console.log(isSelect3)
     return (
         <form className='w-full min-h-[80vh] space-y-6 lg:grid lg:grid-cols-2 lg:gap-5' onSubmit={save}>
             {modal === 'Guardando...' && <Loader> {modal} </Loader>}

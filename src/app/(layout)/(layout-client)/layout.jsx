@@ -27,7 +27,6 @@ export default function Home({ children }) {
     setIsSelect2(false)
     setIsSelect3(false)
     setIsSelect4(false)
-
   }
 
   useEffect(() => {

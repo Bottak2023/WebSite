@@ -10,12 +10,17 @@ import { getSpecificData, getSpecificDataEq} from '@/firebase/database'
 
 export default function RootLayout({ children }) {
 
-    const { user, userDB, setUserProfile, nav, setNav, userNav, setNavItem, setUserNav, state, setState, setUserSuccess, success, setUserData, postsIMG, setUserPostsIMG, divisas, setDivisas, setCountries, setEnviosDB, setCambiosDB, setNotificaciones } = useUser()
+    const { user, userDB, setUserProfile, nav, setNav, userNav, setNavItem, setUserData, divisas, setDivisas, setCountries, setEnviosDB, setCambiosDB, setNotificaciones, setIsSelect, setIsSelect2, setIsSelect3, setIsSelect4, setIsSelect5} = useUser()
     const router = useRouter()
     console.log(user)
     console.log(userDB)
 
     function mainHandler () {
+        setIsSelect(false)
+        setIsSelect2(false)
+        setIsSelect3(false)
+        setIsSelect4(false)
+        setIsSelect5(false)
         setNavItem('')
         setNotificaciones(false)
         

@@ -50,7 +50,7 @@ function writeUserData(rute, object, setUserSuccess, callback) {
     .then(() => {
       console.log('Success')
       setUserSuccess !== null ? setUserSuccess('save') : ''
-      callback !== null ? callback() : ''
+      callback !== null ? callback(object) : ''
     })
     .catch((err) => {
       console.log('error')

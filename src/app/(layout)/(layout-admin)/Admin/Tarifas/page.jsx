@@ -184,8 +184,79 @@ export default function Home() {
     const jsonData = await responseData.json();
     setResP2P(jsonData.data)
   }
-  console.log(resP2P);
 
+
+
+
+  async function getExchage(i) {
+    const headers = {
+      "Accept": "*/*",
+      "Accept-Encoding": "gzip, deflate, br",
+      "Accept-Language": "en-GB,en-US;q=0.9,en;q=0.8",
+      "Cache-Control": "no-cache",
+      "Connection": "keep-alive",
+      "Content-Length": "123",
+      "content-type": "application/json",
+      "Host": "p2p.binance.com",
+      "Origin": "https://p2p.binance.com",
+      "Pragma": "no-cache",
+      "TE": "Trailers",
+      "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:88.0) Gecko/20100101 Firefox/88.0"
+    };
+
+    const data = {
+      asset: 'USDT',
+      // tradeType: 'BUY',
+      fiat: i.code,
+      transAmount: state[i.code] && state[i.code].transAmount ? state[i.code].transAmount : (i.transAmount ? i.transAmount:  0),
+      order: '',
+      page: 2,
+      rows: 15,
+      filterType: 'all'
+    };
+
+    const responseData = await fetch(
+      'https://p2p.binance.com/bapi/c2c/v2/friendly/c2c/adv/search',
+      {
+        headers,
+        method: 'POST',
+        body: JSON.stringify({ ...data, tradeType: 'BUY', }),
+
+      }
+    );
+    const responseData2 = await fetch(
+      'https://p2p.binance.com/bapi/c2c/v2/friendly/c2c/adv/search',
+      {
+        headers,
+        method: 'POST',
+        body: JSON.stringify({ ...data, tradeType: 'SELL', }),
+
+      }
+    );
+    // if (!responseData.ok) throw 'bad response';
+    // if (!responseData.ok) throw 'bad response';
+
+    const jsonData = await responseData.json();
+    const jsonData2 = await responseData2.json();
+
+    if (jsonData.data.length !== 0 && jsonData2.data.length !== 0) {
+      let tempMaxima = Math.max(...jsonData.data.map((i) => i.adv.price));
+      let tempMinima = Math.min(...jsonData.data.map((i) => i.adv.price));
+      let promedio = (tempMaxima + tempMinima) / 2;
+
+
+      let tempMaxima2 = Math.max(...jsonData2.data.map((i) => i.adv.price));
+      let tempMinima2 = Math.min(...jsonData2.data.map((i) => i.adv.price));
+      let promedio2 = (tempMaxima2 + tempMinima2) / 2;
+      setState({ ...state, [i.code]: { ...state[i.code],  compra: (promedio2 + 0.01).toFixed(2), venta: (promedio + 0.01).toFixed(2) } })
+    } else {
+      setModal('NonExchange')
+      setItem({ ...i, transAmount: state[i.code] && state[i.code].transAmount ? state[i.code].transAmount : 0, })
+    }
+
+  }
+
+  console.log(state)
 
 
 
@@ -198,6 +269,7 @@ export default function Home() {
     <main className='h-full w-full'>
       {modal === 'Guardando...' && <Loader> {modal} </Loader>}
       {modal === 'Save' && <Modal funcion={saveConfirm}>Estas por modificar la tasa de cambio de:  {item['currency']}</Modal>}
+      {modal === 'NonExchange' && <Modal funcion={disableConfirm}>{item.code ? `La divisa ${item.code} no esta en la P2P de binance` : ''} {item.transAmount ? `o no se encontro cambio para el volumen ${item.transAmount}` : ''}</Modal>}
       {modal === 'Disable' && <Modal funcion={disableConfirm}>Estas por {item.habilitado !== undefined && item.habilitado !== false ? 'DESABILITAR' : 'HABILITAR'} el siguiente item:  {item['currency']}</Modal>}
       <button className='fixed text-[20px] text-gray-500 h-[50px] w-[50px] rounded-full inline-block left-[0px] top-0 bottom-0 my-auto bg-[#00000010] z-20 lg:left-[20px]' onClick={prev}>{'<'}</button>
       <button className='fixed text-[20px] text-gray-500 h-[50px] w-[50px] rounded-full inline-block right-[0px] top-0 bottom-0 my-auto bg-[#00000010] z-20 lg:right-[20px]' onClick={next}>{'>'}</button>
@@ -230,19 +302,10 @@ export default function Home() {
             </div>
             <div class="w-full md:w-[25%] px-3 py-5 md:py-0 flex items-end">
               <Button theme="Primary" click={getChangeP2P}>Get Change</Button>
-
             </div>
 
           </div>
         </form>
-
-
-
-
-
-
-
-
 
 
         {resP2P && <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
@@ -317,6 +380,12 @@ export default function Home() {
                 Venta
               </th>
               <th scope="col" className="text-center px-3 py-3">
+                Volumen de exchange
+              </th>
+              <th scope="col" className="text-center px-3 py-3">
+                Aply Exchange USDT
+              </th>
+              <th scope="col" className="text-center px-3 py-3">
                 Tarifa de Envio<br />
                 1 - 1000 USD
               </th>
@@ -352,11 +421,21 @@ export default function Home() {
                   1 USD = {exchange && exchange !== undefined && exchange[i.code] !== undefined && exchange[i.code]} {exchange && exchange !== undefined && exchange[i.code] !== undefined && `${i.code}`}
                 </td>
                 <td className="w-32 p-4">
-                  <input type="number" name="compra" className='w-[100px] text-center p-2 outline-blue-200 rounded-xl' onChange={(e) => onChangeHandler(e, i)} defaultValue={i['compra'] !== undefined ? i['compra'] : 0} />
+                  {/* <input type="number" name="compra" className='w-[100px] text-center p-2 outline-blue-200 rounded-xl' onChange={(e) => onChangeHandler(e, i)} defaultValue={i['compra'] !== undefined ? i['compra'] : 0} /> */}
+                  <input type="number" name="compra" className='w-[100px] text-center p-2 outline-blue-200 rounded-xl' onChange={(e) => onChangeHandler(e, i)} value={state[i.code] && state[i.code].compra ? state[i.code].compra : (i['compra'] !== undefined ? i['compra'] : '')} />
                 </td>
                 <td className="w-32 p-4">
-                  <input type="number" name="venta" className='w-[100px] text-center p-2 outline-blue-200 rounded-xl' onChange={(e) => onChangeHandler(e, i)} defaultValue={i['venta'] !== undefined ? i['venta'] : 0} />
+                  <input type="number" name="venta" className='w-[100px] text-center p-2 outline-blue-200 rounded-xl' onChange={(e) => onChangeHandler(e, i)} value={state[i.code] && state[i.code].venta ? state[i.code].venta : (i['venta'] !== undefined ? i['venta'] : '')} />
                 </td>
+
+                <td className="w-32 p-4">
+                  <input type="number" name="transAmount" className='w-[100px] text-center p-2 outline-blue-200 rounded-xl' onChange={(e) => onChangeHandler(e, i)} value={state[i.code] && state[i.code].transAmount ? state[i.code].transAmount : (i['transAmount'] !== undefined ? i['transAmount'] : '')} />
+                </td>
+
+                <td className="w-32 p-4">
+                  <Button theme={"Success"} click={() => getExchage(i)}>Get & Apply</Button>
+                </td>
+
                 <td className="w-32 p-4">
                   <input type="number" name="tarifa 1" className='w-[100px] text-center p-2 outline-blue-200 rounded-xl' onChange={(e) => onChangeHandler(e, i)} defaultValue={i['tarifa 1'] !== undefined ? i['tarifa 1'] : 0} />
                 </td>
