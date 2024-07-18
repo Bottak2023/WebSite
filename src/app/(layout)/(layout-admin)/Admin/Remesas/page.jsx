@@ -319,7 +319,7 @@ export default function Home() {
                   <td className="px-3 py-4  flex  ">
                     <span className='h-full flex py-2'>{index + 1}</span>
                   </td>
-                  {/* {console.log(i['estado'])} */}
+                  {console.log(i)}
                   <td className="min-w-32 px-3 py-4  ">
                     <Select arr={['En verficación', 'Transfiriendo', 'Exitoso', 'Rechazado']} name='estado' uuid={i.uuid} defaul={i.estado} click={handlerSelect} />
                   </td>

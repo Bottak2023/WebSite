@@ -1,3 +1,7 @@
+
+
+// --------------------- DATOS PRODUCCION
+
 const TelegramBot = require('node-telegram-bot-api');
 
 export default async function account(req, res) {
@@ -22,7 +26,7 @@ export default async function account(req, res) {
 
 
 
-
+// // --------------------- DATOS DESARROLLO
 
 // const TelegramBot = require('node-telegram-bot-api');
 

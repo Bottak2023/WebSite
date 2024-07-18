@@ -74,6 +74,7 @@ function Home() {
             fecha,
             date,
             uuid,
+            email: user.email
         }
         setModal('Guardando...')
         const callback = async (object) => {
