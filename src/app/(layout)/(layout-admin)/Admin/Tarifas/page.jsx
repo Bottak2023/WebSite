@@ -273,7 +273,7 @@ export default function Home() {
     };
 
     const responseData = await fetch(
-      'https://p2p.binance.com/bapi/c2c/v2/friendly/c2c/adv/search',
+      'https://cors-anywhere.herokuapp.com/https://p2p.binance.com/bapi/c2c/v2/friendly/c2c/adv/search',
       {
         headers,
         method: 'POST',
@@ -282,7 +282,7 @@ export default function Home() {
       }
     );
     const responseData2 = await fetch(
-      'https://p2p.binance.com/bapi/c2c/v2/friendly/c2c/adv/search',
+      'https://cors-anywhere.herokuapp.com/https://p2p.binance.com/bapi/c2c/v2/friendly/c2c/adv/search',
       {
         headers,
         method: 'POST',
