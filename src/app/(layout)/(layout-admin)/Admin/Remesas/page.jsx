@@ -26,10 +26,10 @@ export default function Home() {
   }
   function handlerProfileIMG(img) {
     setProfileIMG(img)
-}
-function closeProfileIMG() {
-  setProfileIMG('')
-}
+  }
+  function closeProfileIMG() {
+    setProfileIMG('')
+  }
   function sortArray(x, y) {
     if (x['translation']['spa']['common'].toLowerCase() < y['translation']['spa']['common'].toLowerCase()) { return -1 }
     if (x['translation']['spa']['common'].toLowerCase() > y['translation']['spa']['common'].toLowerCase()) { return 1 }
@@ -38,13 +38,159 @@ function closeProfileIMG() {
   function handlerSelect(name, i, uuid) {
     setState({ ...state, [uuid]: { [name]: i } })
   }
-  function save(uuid) {
-    function callback () {
+
+
+
+
+
+
+
+
+
+
+
+
+  // function save(e) {
+
+  //   e.preventDefault()
+  //   e.stopPropagation()
+
+
+  //   const callback = async (object) => {
+
+
+
+
+  //     const botChat = ` 
+  //       ---DATOS REGISTRO DE REMITENTE---\n
+  //         Remitente: ${object['remitente']},\n
+  //         Dni remitente: ${object['dni remitente']},\n
+  //         Pais remitente: ${object['pais remitente']},\n
+  //         Banco remitente: ${object['banco remitente']},\n
+  //         Divisa de envio: ${object['divisa de envio']},\n
+
+  //       -------DATOS DESTINATARIO-------\n
+  //         Destinatario: ${object['destinatario']},\n
+  //         DNI destinatario: ${object['dni']},\n
+  //         Pais destinatario: ${object['pais']},\n
+  //         Direccion: ${object['direccion']},\n
+  //         Celular: ${object['celular']},\n
+  //         Cuenta destinatario: ${object['cuenta destinatario']},\n
+  //         Nombre de banco: ${object['nombre de banco']},\n
+  //         Divisa de receptor: ${object['divisa de receptor']},\n
+
+  //         ---DATOS DE TRANSACCION GENERALES---\n
+  //         Operacion: ${object['operacion']},\n
+  //         Importe: ${object['importe']},\n
+  //         Comision: ${object['comision']},\n
+  //         Cambio: ${object['cambio']},\n
+  //         Estado: ${object['estado']},\n
+  //         fecha: ${object['fecha']},\n
+
+  //         ---DATOS DE TRANSACCION REMITENTE---\n
+  //         Pais cuenta bancaria: ${object['pais cuenta bancaria']},\n
+  //         Nombre de banco: ${object['nombre de banco']},\n
+  //         Cuenta bancaria: ${object['cuenta bancaria']},\n
+
+  //         ---DATOS DE TRANSACCION BOTTAK---\n
+  //         banco de transferencia: ${object['banco de transferencia']},\n 
+  //         `
+  //     await fetch(`/api/sendEmail`, {
+  //       method: 'POST',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //       },
+  //       body: JSON.stringify({ data: botChat, estado: object['estado'], email: user.email })
+  //     })
+  //     await fetch(`/api/bot`, {
+  //       method: 'POST',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //       },
+  //       body: JSON.stringify({ data: botChat, url: object.url }),
+  //     })
+  //     setModal('')
+  //   }
+
+  //   // writeUserData(`envios/${uuid}`, db, setUserSuccess, callback)
+  // }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  function save(i, uuid) {
+    async function callback(obj) {
+
+      const object = { ...i, ...obj }
+
+
+
+
+
+      const botChat = ` 
+      --REPORTE ${(object['estado']).toUpperCase()}
+  ---DATOS REGISTRO DE REMITENTE---\n
+    Remitente: ${object['remitente']},\n
+    Dni remitente: ${object['dni remitente']},\n
+    Pais remitente: ${object['pais remitente']},\n
+    Banco remitente: ${object['banco remitente']},\n
+    Divisa de envio: ${object['divisa de envio']},\n
+  
+  -------DATOS DESTINATARIO-------\n
+    Destinatario: ${object['destinatario']},\n
+    DNI destinatario: ${object['dni']},\n
+    Pais destinatario: ${object['pais']},\n
+    Direccion: ${object['direccion']},\n
+    Celular: ${object['celular']},\n
+    Cuenta destinatario: ${object['cuenta destinatario']},\n
+    Nombre de banco: ${object['nombre de banco']},\n
+    Divisa de receptor: ${object['divisa de receptor']},\n
+  
+    ---DATOS DE TRANSACCION GENERALES---\n
+    Operacion: ${object['operacion']},\n
+    Importe: ${object['importe']},\n
+    Comision: ${object['comision']},\n
+    Cambio: ${object['cambio']},\n
+    Estado: ${object['estado']},\n
+    fecha: ${object['fecha']},\n
+  
+    ---DATOS DE TRANSACCION REMITENTE---\n
+    Pais cuenta bancaria: ${object['pais cuenta bancaria']},\n
+    Nombre de banco: ${object['nombre de banco']},\n
+    Cuenta bancaria: ${object['cuenta bancaria']},\n
+  
+    ---DATOS DE TRANSACCION BOTTAK---\n
+    banco de transferencia: ${object['banco de transferencia']},\n 
+    `
+      await fetch(`/api/sendEmail`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ data: botChat, estado: object['estado'], email: user.email })
+      })
+      await fetch(`/api/bot`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ data: botChat, url: object.url }),
+      })
       setModal('')
     }
 
     setModal('Guardando...')
-    writeUserData(`envios/${uuid}`, {...state[uuid], notificaciones: true, date: new Date().getTime()}, setUserSuccess, callback)
+    writeUserData(`envios/${uuid}`, { ...state[uuid], notificaciones: true, date: new Date().getTime() }, setUserSuccess, callback)
   }
   const prev = () => {
     requestAnimationFrame(() => {
@@ -239,7 +385,7 @@ function closeProfileIMG() {
                   </td>
                   <td className="px-3 py-4">
                     {state && state !== undefined && state[i.uuid] && state[i.uuid] !== undefined
-                      ? <Button theme={"Success"} click={() => save(i.uuid)}>Guardar</Button>
+                      ? <Button theme={"Success"} click={() => save(i, i.uuid)}>Guardar</Button>
                       : <Button theme={"Disable"}>Desabilitado</Button>
                     }
                   </td>
