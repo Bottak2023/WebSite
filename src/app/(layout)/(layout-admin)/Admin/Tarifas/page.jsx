@@ -267,7 +267,7 @@ export default function Home() {
       fiat: i.code,
       transAmount: state[i.code] && state[i.code].transAmount ? state[i.code].transAmount : (i.transAmount ? i.transAmount:  0),
       order: '',
-      page: 2,
+      page: 1,
       rows: 15,
       filterType: 'all'
     };
