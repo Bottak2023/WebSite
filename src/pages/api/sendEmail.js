@@ -5,8 +5,8 @@ export default function handler(req, res) {
     const transporter = nodemailer.createTransport({
         service: "Gmail",
         auth: {
-            user: "proyection009@gmail.com",
-            pass: "vetc qcup vslc kihm",
+            user: "info.bottak@gmail.com",
+            pass: "nfhj cmeo eedt psab",
         },
     });
 
@@ -14,7 +14,7 @@ export default function handler(req, res) {
 
 
         await transporter.sendMail({
-            from: 'proyection009@gmail.com',
+            from: 'info.bottak@gmail.com',
             to: req.body.email,
             subject: ` Reporte de transaccion: estado: ${req.body.estado}`,
             text: req.body.data,
