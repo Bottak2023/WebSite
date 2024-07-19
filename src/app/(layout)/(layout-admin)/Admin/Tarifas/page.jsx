@@ -268,7 +268,7 @@ export default function Home() {
       transAmount: state[i.code] && state[i.code].transAmount ? state[i.code].transAmount : (i.transAmount ? i.transAmount:  0),
       order: '',
       page: 1,
-      rows: 15,
+      rows: 5,
       filterType: 'all'
     };
 
