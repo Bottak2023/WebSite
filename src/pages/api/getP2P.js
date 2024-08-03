@@ -4,10 +4,6 @@ export default async function account(req, res) {
     console.log(req.body)
     console.log('-------------')
 
-    const token = '6674000394:AAE5B5t7BpDI-RLD4C5zdbYyRqmG7h_1Uac';
-    const bot = new TelegramBot(token, { polling: true });
-
-
     const headers = {
         "Accept": "*/*",
         "Accept-Encoding": "gzip, deflate, br",
@@ -23,23 +19,14 @@ export default async function account(req, res) {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:88.0) Gecko/20100101 Firefox/88.0"
     };
 
-    const data = {
-        asset: 'USDT',
-        tradeType: 'SELL',
-        fiat: 'BOB',
-        transAmount: 0,
-        order: '',
-        page: 1,
-        rows: 10,
-        filterType: 'all'
-    };
+
     (async () => {
         const responseData = await fetch(
             'https://p2p.binance.com/bapi/c2c/v2/friendly/c2c/adv/search',
             {
                 headers,
                 method: 'POST',
-                body: JSON.stringify(data),
+                body: JSON.stringify(req.body),
             }
         );
 
@@ -49,7 +36,7 @@ export default async function account(req, res) {
         const jsonData = await responseData.json();
 
 
-        res.json(JSON.stringify(jsonData, 0, 4));
+        res.json(jsonData);
 
     })()
 }

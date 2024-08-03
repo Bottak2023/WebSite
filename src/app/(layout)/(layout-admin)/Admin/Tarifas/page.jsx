@@ -139,110 +139,143 @@ export default function Home() {
 
 
 
-  async function getChangeP2P(e) {
-    e.preventDefault()
-    const headers = {
-      "Accept": "*/*",
-      "Accept-Encoding": "gzip, deflate, br",
-      "Accept-Language": "en-GB,en-US;q=0.9,en;q=0.8",
-      "Cache-Control": "no-cache",
-      "Connection": "keep-alive",
-      "Content-Length": "123",
-      "content-type": "application/json",
-      "Host": "p2p.binance.com",
-      "Origin": "https://p2p.binance.com",
-      "Pragma": "no-cache",
-      "TE": "Trailers",
-      "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:88.0) Gecko/20100101 Firefox/88.0"
-    };
+  // async function getChangeP2P(e) {
+  //   e.preventDefault()
+  //   const headers = {
+  //     "Accept": "*/*",
+  //     "Accept-Encoding": "gzip, deflate, br",
+  //     "Accept-Language": "en-GB,en-US;q=0.9,en;q=0.8",
+  //     "Cache-Control": "no-cache",
+  //     "Connection": "keep-alive",
+  //     "Content-Length": "123",
+  //     "content-type": "application/json",
+  //     "Host": "p2p.binance.com",
+  //     "Origin": "https://p2p.binance.com",
+  //     "Pragma": "no-cache",
+  //     "TE": "Trailers",
+  //     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:88.0) Gecko/20100101 Firefox/88.0"
+  //   };
 
-    const data = {
-      asset: crypto,
-      tradeType: trade,
-      fiat,
-      transAmount: 0,
-      order: '',
-      page: 1,
-      rows: 10,
-      filterType: 'all'
-    };
+  //   const data = {
+  //     asset: crypto,
+  //     tradeType: trade,
+  //     fiat,
+  //     transAmount: 0,
+  //     order: '',
+  //     page: 1,
+  //     rows: 10,
+  //     filterType: 'all'
+  //   };
 
-    const responseData = await fetch(
-      'https://p2p.binance.com/bapi/c2c/v2/friendly/c2c/adv/search',
-      {
-        headers,
-        method: 'POST',
-        body: JSON.stringify(data),
+  //   const responseData = await fetch(
+  //     'https://p2p.binance.com/bapi/c2c/v2/friendly/c2c/adv/search',
+  //     {
+  //       headers,
+  //       method: 'POST',
+  //       body: JSON.stringify(data),
 
-      }
-    );
+  //     }
+  //   );
 
-    if (!responseData.ok)
-      throw 'bad response';
-    const jsonData = await responseData.json();
-    setResP2P(jsonData.data)
-  }
+  //   if (!responseData.ok)
+  //     throw 'bad response';
+  //   const jsonData = await responseData.json();
+  //   setResP2P(jsonData.data)
+  // }
 
 
-  async function getChangeP2P(e) {
-    e.preventDefault()
-    const headers = {
-      "Accept": "*/*",
-      "Accept-Encoding": "gzip, deflate, br",
-      "Accept-Language": "en-GB,en-US;q=0.9,en;q=0.8",
-      "Cache-Control": "no-cache",
-      "Connection": "keep-alive",
-      "Content-Length": "123",
-      "content-type": "application/json",
-      "Host": "p2p.binance.com",
-      "Origin": "https://p2p.binance.com",
-      "Pragma": "no-cache",
-      "TE": "Trailers",
-      "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:88.0) Gecko/20100101 Firefox/88.0"
-    };
+  // async function getChangeP2P(e) {
+  //   e.preventDefault()
+  //   const headers = {
+  //     "Accept": "*/*",
+  //     "Accept-Encoding": "gzip, deflate, br",
+  //     "Accept-Language": "en-GB,en-US;q=0.9,en;q=0.8",
+  //     "Cache-Control": "no-cache",
+  //     "Connection": "keep-alive",
+  //     "Content-Length": "123",
+  //     "content-type": "application/json",
+  //     "Host": "p2p.binance.com",
+  //     "Origin": "https://p2p.binance.com",
+  //     "Pragma": "no-cache",
+  //     "TE": "Trailers",
+  //     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:88.0) Gecko/20100101 Firefox/88.0"
+  //   };
 
-    const data = {
-      asset: crypto,
-      tradeType: trade,
-      fiat,
-      transAmount: 0,
-      order: '',
-      page: 1,
-      rows: 10,
-      filterType: 'all'
-    };
+  //   const data = {
+  //     asset: crypto,
+  //     tradeType: trade,
+  //     fiat,
+  //     transAmount: 0,
+  //     order: '',
+  //     page: 1,
+  //     rows: 10,
+  //     filterType: 'all'
+  //   };
 
     
-    const responseData = await fetch(
-      'https://cors-anywhere.herokuapp.com/https://p2p.binance.com/bapi/c2c/v2/friendly/c2c/adv/search',
-      {
-        headers,
-        method: 'POST',
-        body: JSON.stringify(data),
+  //   const responseData = await fetch(
+  //     'https://cors-anywhere.herokuapp.com/https://p2p.binance.com/bapi/c2c/v2/friendly/c2c/adv/search',
+  //     {
+  //       headers,
+  //       method: 'POST',
+  //       body: JSON.stringify(data),
 
-      }
-    );
-
-
+  //     }
+  //   );
 
 
 
 
-    // const responseData = await fetch(
-    //   'https://p2p.binance.com/bapi/c2c/v2/friendly/c2c/adv/search',
-    //   {
-    //     headers,
-    //     method: 'POST',
-    //     body: JSON.stringify(data),
 
-    //   }
-    // );
 
-    if (!responseData.ok)
-      throw 'bad response';
-    const jsonData = await responseData.json();
-    setResP2P(jsonData.data)
-  }
+  //   // const responseData = await fetch(
+  //   //   'https://p2p.binance.com/bapi/c2c/v2/friendly/c2c/adv/search',
+  //   //   {
+  //   //     headers,
+  //   //     method: 'POST',
+  //   //     body: JSON.stringify(data),
+
+  //   //   }
+  //   // );
+
+  //   if (!responseData.ok)
+  //     throw 'bad response';
+  //   const jsonData = await responseData.json();
+  //   setResP2P(jsonData.data)
+  // }
+
+
+
+
+async function getChangeP2P (e) {
+  e.preventDefault()
+
+    const data = {
+      asset: crypto,
+      tradeType: trade,
+      fiat,
+      transAmount: 0,
+      order: '',
+      page: 1,
+      rows: 10,
+      filterType: 'all'
+    };
+
+
+ let res= await fetch('/api/getP2P',    {
+  headers: {      
+    "Content-Length": "123",
+    "content-type": "application/json",},
+  method: 'POST',
+  body: JSON.stringify({ ...data }),
+
+})
+ let resDB =await res.json()
+ console.log()
+   setResP2P(resDB.data)
+
+}
+
 
 
   async function getExchage(i) {
